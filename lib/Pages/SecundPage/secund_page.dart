@@ -7,13 +7,14 @@ class SecundPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('page 2'),
+        title: const Text('page 2'),
         centerTitle: true,
       ),
       body: const Center(
           child: Column(
         children: [
-          Text("Secund page"),
+          Text("😉"),
+          
         ],
       )),
     );

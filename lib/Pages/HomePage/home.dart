@@ -7,18 +7,39 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home'),
+        title: const Text('Home'),
         centerTitle: true,
       ),
-      body: Center(
-        child: Column(
-          children: [
-            ElevatedButton(
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.only(top: 15),
+        child: Center(
+          child: Column(
+            children: [
+              Card(
+                elevation: 4,
+                color: Color(0xFFe9ddff),
+                child: Column(
+                  children: [
+                    Text(
+                      'Tempo',
+                      style:
+                          TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
+                    ),
+                    Container(
+                      width: 300,
+                      height: 300,
+                    ),
+                  ],
+                ),
+              ),
+              ElevatedButton(
                 onPressed: () {
                   Navigator.pushNamed(context, '/second');
                 },
-                child: const Text('Second Screen'))
-          ],
+                child: const Text('Second Screen'),
+              ),
+            ],
+          ),
         ),
       ),
     );

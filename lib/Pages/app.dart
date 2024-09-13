@@ -15,8 +15,8 @@ class _AppState extends State<App> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primaryColor: const Color(0xff272b60),
         fontFamily: 'Roboto',
+        primaryColor: const Color(0xff272b60),
         appBarTheme: const AppBarTheme(
           color: Color(0xff272b60),
           titleTextStyle: TextStyle(color: Colors.white),
