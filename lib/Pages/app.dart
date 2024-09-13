@@ -14,6 +14,18 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primaryColor: const Color(0xff272b60),
+        fontFamily: 'Roboto',
+        appBarTheme: const AppBarTheme(
+          color: Color(0xff272b60),
+          titleTextStyle: TextStyle(color: Colors.white),
+          iconTheme: IconThemeData(
+            color: Colors.white,
+          ),
+        ),
+        // Outras personalizações de estilo aqui
+      ),
       title: "teste de rotas",
       routes: {
         '/': (context) => const HomePage(),

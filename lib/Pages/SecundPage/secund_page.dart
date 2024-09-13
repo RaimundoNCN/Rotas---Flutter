@@ -6,8 +6,12 @@ class SecundPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: Center(child: Column(
+      appBar: AppBar(
+        title: Text('page 2'),
+        centerTitle: true,
+      ),
+      body: const Center(
+          child: Column(
         children: [
           Text("Secund page"),
         ],

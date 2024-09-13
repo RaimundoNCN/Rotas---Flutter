@@ -6,14 +6,18 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text('Home'),
+        centerTitle: true,
+      ),
       body: Center(
         child: Column(
           children: [
-            Text('Home Page'),
-            ElevatedButton(onPressed: () {
-              Navigator.pushNamed(context, '/second');
-            }, child: Text('Second Screen'))
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/second');
+                },
+                child: const Text('Second Screen'))
           ],
         ),
       ),
