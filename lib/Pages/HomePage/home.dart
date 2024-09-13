@@ -13,6 +13,29 @@ class _HomePageState extends State<HomePage> {
   List<String> _tasks = [];
 
   @override
+  void initState() {
+    super.initState();
+    _loadTasks();
+  }
+  
+  // erro da linha 20 a 35
+  _loadTasks() async {
+    final prefs = await SharedPreferences.getInstance();
+    final tasks = prefs.getStringList('tasks');
+    if (tasks != null) {
+      setState(() {
+        _tasks = tasks;
+      });
+    }
+  }
+
+   _saveTasks() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setStringList('tasks', _tasks);
+  }
+ // erro!
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -24,27 +47,20 @@ class _HomePageState extends State<HomePage> {
         child: Center(
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(
-                  top: 12,
-                  left: 26,
-                  right: 26,
-                ),
-                child: Form(
-                  key: _formKey,
-                  child: TextFormField(
-                    controller: _taskController,
-                    decoration: InputDecoration(
-                      labelText: 'Nova tarefa',
-                      border: OutlineInputBorder(),
-                    ),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Por favor, insira uma tarefa';
-                      }
-                      return null;
-                    },
+              Form(
+                key: _formKey,
+                child: TextFormField(
+                  controller: _taskController,
+                  decoration: InputDecoration(
+                    labelText: 'Nova tarefa',
+                    border: OutlineInputBorder(),
                   ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Por favor, insira uma tarefa';
+                    }
+                    return null;
+                  },
                 ),
               ),
               SizedBox(height: 20),
@@ -55,6 +71,7 @@ class _HomePageState extends State<HomePage> {
                       _tasks.add(_taskController.text);
                       _taskController.clear();
                     });
+                    _saveTasks();
                   }
                 },
                 child: Text('Adicionar'),
@@ -73,6 +90,7 @@ class _HomePageState extends State<HomePage> {
                           setState(() {
                             _tasks.removeAt(index);
                           });
+                          _saveTasks();
                         },
                       ),
                     ),
