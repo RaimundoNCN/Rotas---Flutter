@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final _formKey = GlobalKey<FormState>();
+  final _taskController = TextEditingController();
+  List<String> _tasks = [];
 
   @override
   Widget build(BuildContext context) {
@@ -15,22 +24,60 @@ class HomePage extends StatelessWidget {
         child: Center(
           child: Column(
             children: [
-              Card(
-                elevation: 4,
-                color: Color(0xFFe9ddff),
-                child: Column(
-                  children: [
-                    Text(
-                      'Tempo',
-                      style:
-                          TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
-                    ),
-                    Container(
-                      width: 300,
-                      height: 300,
-                    ),
-                  ],
+              Padding(
+                padding: const EdgeInsets.only(
+                  top: 12,
+                  left: 26,
+                  right: 26,
                 ),
+                child: Form(
+                  key: _formKey,
+                  child: TextFormField(
+                    controller: _taskController,
+                    decoration: InputDecoration(
+                      labelText: 'Nova tarefa',
+                      border: OutlineInputBorder(),
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Por favor, insira uma tarefa';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    setState(() {
+                      _tasks.add(_taskController.text);
+                      _taskController.clear();
+                    });
+                  }
+                },
+                child: Text('Adicionar'),
+              ),
+              SizedBox(height: 20),
+              ListView.builder(
+                shrinkWrap: true,
+                itemCount: _tasks.length,
+                itemBuilder: (context, index) {
+                  return Card(
+                    child: ListTile(
+                      title: Text(_tasks[index]),
+                      trailing: IconButton(
+                        icon: Icon(Icons.delete),
+                        onPressed: () {
+                          setState(() {
+                            _tasks.removeAt(index);
+                          });
+                        },
+                      ),
+                    ),
+                  );
+                },
               ),
               ElevatedButton(
                 onPressed: () {
