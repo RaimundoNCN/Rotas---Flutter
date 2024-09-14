@@ -1,3 +1,4 @@
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -17,7 +18,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     _loadTasks();
   }
-  
+
   // erro da linha 20 a 35
   _loadTasks() async {
     final prefs = await SharedPreferences.getInstance();
@@ -29,11 +30,11 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-   _saveTasks() async {
+  _saveTasks() async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setStringList('tasks', _tasks);
   }
- // erro!
+  // erro!
 
   @override
   Widget build(BuildContext context) {
@@ -47,23 +48,26 @@ class _HomePageState extends State<HomePage> {
         child: Center(
           child: Column(
             children: [
-              Form(
-                key: _formKey,
-                child: TextFormField(
-                  controller: _taskController,
-                  decoration: InputDecoration(
-                    labelText: 'Nova tarefa',
-                    border: OutlineInputBorder(),
+              Padding(
+                padding: const EdgeInsets.only(top: 12, left: 16, right: 16),
+                child: Form(
+                  key: _formKey,
+                  child: TextFormField(
+                    controller: _taskController,
+                    decoration: const InputDecoration(
+                      labelText: 'Nova tarefa',
+                      border: OutlineInputBorder(),
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Por favor, insira uma tarefa';
+                      }
+                      return null;
+                    },
                   ),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Por favor, insira uma tarefa';
-                    }
-                    return null;
-                  },
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
@@ -74,35 +78,40 @@ class _HomePageState extends State<HomePage> {
                     _saveTasks();
                   }
                 },
-                child: Text('Adicionar'),
+                child: const Text('Adicionar'),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ListView.builder(
                 shrinkWrap: true,
                 itemCount: _tasks.length,
                 itemBuilder: (context, index) {
-                  return Card(
-                    child: ListTile(
-                      title: Text(_tasks[index]),
-                      trailing: IconButton(
-                        icon: Icon(Icons.delete),
-                        onPressed: () {
-                          setState(() {
-                            _tasks.removeAt(index);
-                          });
-                          _saveTasks();
-                        },
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Card(
+                      elevation: 2,
+                      color: const Color.fromARGB(255, 223, 208, 240),
+                      child: ListTile(
+                        title: Text(_tasks[index]),
+                        trailing: IconButton(
+                          icon: const Icon(Icons.delete),
+                          onPressed: () {
+                            setState(() {
+                              _tasks.removeAt(index);
+                            });
+                            _saveTasks();
+                          },
+                        ),
                       ),
                     ),
                   );
                 },
               ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/second');
-                },
-                child: const Text('Second Screen'),
-              ),
+              //ElevatedButton(
+              //  onPressed: () {
+              //    Navigator.pushNamed(context, '/second');
+              //  },
+              //  child: const Text('Second Screen'),
+              //),
             ],
           ),
         ),
