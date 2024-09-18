@@ -43,6 +43,19 @@ class _HomePageState extends State<HomePage> {
         title: const Text('Home'),
         centerTitle: true,
       ),
+      drawer: Drawer(
+        child: Column(
+          children: [
+            const Padding(padding: EdgeInsets.only(top: 38)),
+            OutlinedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/second');
+              },
+              child: const Text('Second Screen'),
+            )
+          ],
+        ),
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.only(top: 15),
         child: Center(
